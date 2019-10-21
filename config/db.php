@@ -7,9 +7,6 @@ $database = 'bookshop';
 
 $conn = mysqli_connect($host, $username, $password, $database);
 
-// Checking for connection
 if (!$conn) {
-    die("Error in connecting to the database");
+    die("Connection failed: " . mysqli_connect_error());
 }
- ?>
- 
