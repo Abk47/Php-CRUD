@@ -1,22 +1,53 @@
 <?php
 
-include('dbconnect.php');
+$id = $_GET['id'];
+include('config/db.php');
 
+$query = "SELECT * FROM books WHERE id='$id'";
+$result = mysqli_query($conn, $query);
+?>
 
-$id = $_GET['bookid'];
+<!DOCTYPE html>
+<html lang="en">
 
-$title = $_GET['btitle'];
+<?php include('layout/head.inc.php') ?>
 
-$price = $_GET['bprice'];
+<body class="mb-2 mt-5">
 
-//Create query
+    <h3 class="text-center">Edit Book</h3>
 
-$query = "UPDATE books SET book_title = '$title', book_price = '$price' WHERE book_id = $id";
+    <div class="container col-md-6 bg-light p-4">
 
-if (mysqli_query($conn, $query)) {
-    header("Location:index.php");
-} else {
-    echo "Error in your query";
-}
+        <form method="GET" role="form" action="edit.php">
 
-mysqli_close($conn);
+            <?php
+            if (mysqli_num_rows($result) > 0) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    ?>
+
+                    <input type="hidden" name="bookid" value="<?php echo $row['id']; ?>">
+
+                    <div class="form-group">
+                        <label>Book Title</label>
+                        <input type="text" name="btitle" class="form-control" autocomplete="off" value="<?php echo $row['title']; ?>">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Book Price</label>
+                        <input type="text" name="bprice" class="form-control" autocomplete="off" value="<?php echo $row['price']; ?>">
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-success">EDIT</button>
+                    <a href="index.php" class="btn btn-dark">BACK</a>
+            <?php
+                }
+            }
+            mysqli_close($conn);
+
+            ?>
+
+    </div>
+
+</body>
+
+</html>

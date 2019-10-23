@@ -1,15 +1,12 @@
 <?php
 
-//add Database Connection
-include('dbconnect.php');
+include('config/db.php');
 
-$title = $_POST['btitle']; //Array variables are being obtained from the form (btitle)
+$title = $_POST['btitle'];
+$price = $_POST['bprice'];
 
-$price = $_POST['bprice']; //Array variables are being obtained from the form (bprice)
 
-//Creating Query
-
-$query = "INSERT INTO books(book_title,book_price) VALUES('$title', '$price')";
+$query = "INSERT INTO books(title,price) VALUES('$title', '$price')";
 
 if (mysqli_query($conn, $query)) {
     header("Location:index.php");

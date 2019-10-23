@@ -1,11 +1,10 @@
 <?php
 
-
 $bid = $_GET['id'];
 
-include('dbconnect.php');
+include('config/db.php');
 
-$query = "DELETE FROM books WHERE book_id = $bid";
+$query = "DELETE FROM books WHERE id = $bid";
 
 if (mysqli_query($conn, $query)) {
     header("Location:index.php");
